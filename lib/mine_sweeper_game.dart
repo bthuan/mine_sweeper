@@ -74,6 +74,18 @@ class _MineSweeperGameState extends State<MineSweeperGame> {
             ),
           ),
         ),
+        Container(
+          color: Colors.indigo[100],
+          height: 70.0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FlatButton(
+                  onPressed: () => _handleRevealAll(), child: Text("Reveal")),
+              FlatButton(onPressed: () => _handleHideAll(), child: Text("Hide"))
+            ],
+          ),
+        ),
       ]),
     );
   }
@@ -84,6 +96,11 @@ class _MineSweeperGameState extends State<MineSweeperGame> {
     x = (index / numberOfColumn).floor();
     y = index % numberOfColumn;
 
+//    print("row $row");
+//    print("column $column");
+//    print("index $index");
+//    print("x $x");
+    print("index [$index, $x, $y]");
     return GestureDetector(
       onTap: () => _handleCellTapped(x, y),
       child: GridTile(
@@ -103,6 +120,17 @@ class _MineSweeperGameState extends State<MineSweeperGame> {
   }
 
   _handleCellTapped(x, y) {
+    gameBoard.revealCell(x, y);
+    setState(() {});
+  }
+
+  _handleRevealAll() {
+    gameBoard.revealAll();
+    setState(() {});
+  }
+
+  _handleHideAll() {
+    gameBoard.hideAll();
     setState(() {});
   }
 }

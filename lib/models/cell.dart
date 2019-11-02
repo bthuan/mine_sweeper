@@ -1,6 +1,7 @@
 class Cell {
   CellType type;
   int numberOfBombsSurrounded;
+  bool hidden = true;
 
   bool hasBomb() {
     return type == CellType.bomb;
@@ -38,8 +39,6 @@ class Cell {
     }
   }
 }
-
-
 
 enum CellType {
   zero,

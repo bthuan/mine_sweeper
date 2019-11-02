@@ -25,6 +25,60 @@ class GameBoard {
     _setTypeForEachCell();
   }
 
+  void revealCell(x, y) {
+    // Do nothing if this cell is revealed
+    if (!cells[x][y].hidden) {
+      return;
+    }
+
+    cells[x][y].hidden = false;
+
+    // if this cell is empty -> reveal adjacent cells
+    if (cells[x][y].type == CellType.zero) {
+      // Find all adjacent cells first
+      if (x > 0) {
+        if (y > 0) {
+          revealCell(x - 1, y - 1);
+        }
+        if (y < numberOfColumn - 1) {
+          revealCell(x - 1, y + 1);
+        }
+        revealCell(x - 1, y);
+      }
+      if (x < numberOfRow - 1) {
+        if (y > 0) {
+          revealCell(x + 1, y - 1);
+        }
+        if (y < numberOfColumn - 1) {
+          revealCell(x + 1, y + 1);
+        }
+        revealCell(x + 1, y);
+      }
+      if (y > 0) {
+        revealCell(x, y - 1);
+      }
+      if (y < numberOfColumn - 1) {
+        revealCell(x, y + 1);
+      }
+    }
+  }
+
+  revealAll() {
+    for (var row = 0; row < numberOfRow; row++) {
+      for (var column = 0; column < numberOfColumn; column++) {
+        cells[row][column].hidden = false;
+      }
+    }
+  }
+
+  hideAll() {
+    for (var row = 0; row < numberOfRow; row++) {
+      for (var column = 0; column < numberOfColumn; column++) {
+        cells[row][column].hidden = true;
+      }
+    }
+  }
+
   _addMines() {
     var currentNumberOfMines = 0;
     while (currentNumberOfMines < numberOfBombs) {
