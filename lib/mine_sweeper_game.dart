@@ -12,23 +12,41 @@ class MineSweeperGame extends StatefulWidget {
 }
 
 class _MineSweeperGameState extends State<MineSweeperGame> {
-  int numberOfRow;
-  int numberOfColumn;
-  int numberOfMine;
+  int numberOfRows;
+  int numberOfColumns;
+  int numberOfMines;
   GameBoard gameBoard;
+
+  // Temporary values
+  String numberOfRowsText;
+  String numberOfColumnsText;
+  String numberOfMinesText;
 
   @override
   void initState() {
     super.initState();
-    numberOfRow = 8;
-    numberOfColumn = 10;
-    numberOfMine = 15;
+
+    // Default values
+    numberOfRows = 8;
+    numberOfColumns = 10;
+    numberOfMines = 15;
+    numberOfRowsText = '';
+    numberOfColumnsText = '';
+    numberOfMinesText = '';
+
     // initialize cell
     initialize();
   }
 
   initialize() {
-    gameBoard = new GameBoard(numberOfRow, numberOfColumn, numberOfMine);
+    // reset the configuration if there are values set
+    if(numberOfRowsText.isNotEmpty && numberOfColumnsText.isNotEmpty && numberOfMinesText.isNotEmpty){
+      numberOfRows = int.parse(numberOfRowsText);
+      numberOfColumns = int.parse(numberOfColumnsText);
+      numberOfMines = int.parse(numberOfMinesText);
+    }
+
+    gameBoard = new GameBoard(numberOfRows, numberOfColumns, numberOfMines);
     gameBoard.initializeGame();
     setState(() {});
   }
@@ -88,29 +106,68 @@ class _MineSweeperGameState extends State<MineSweeperGame> {
           child: Container(
             padding: const EdgeInsets.all(8.0),
             margin: const EdgeInsets.all(8.0),
-//              decoration: BoxDecoration(
-//                  border: Border.all(color: Colors.black, width: 2.0)
 //              ),
             child: GridView.builder(
-//                scrollDirection: Axis.horizontal,
-              physics: new NeverScrollableScrollPhysics(),
+//              physics: new NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: numberOfColumn,
+                crossAxisCount: numberOfColumns,
               ),
               itemBuilder: _buildGridItems,
-              itemCount: numberOfRow * numberOfColumn,
+              itemCount: numberOfRows * numberOfColumns,
             ),
           ),
         ),
         Container(
           color: Colors.indigo[100],
-          height: 70.0,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              FlatButton(
-                  onPressed: () => _handleRevealAll(), child: Text("Reveal")),
-              FlatButton(onPressed: () => _handleHideAll(), child: Text("Hide"))
+              Container(
+                margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+                child: SizedBox(
+                    width: 100,
+                    child: TextField(
+                      onChanged: (text) {
+                        this.numberOfRowsText = text;
+                      },
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: 'Row count',
+                        helperText: "Number of rows",
+                        labelText: "Rows",
+                      ),
+                    )),
+              ),
+              Container(
+                  margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  child: SizedBox(
+                      width: 100,
+                      child: TextField(
+                        onChanged: (text) {
+                          this.numberOfColumnsText = text;
+                        },
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: 'Column count',
+                          helperText: "Number of columns",
+                          labelText: "Column",
+                        ),
+                      ))),
+              Container(
+                  margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  child: SizedBox(
+                      width: 100,
+                      child: TextField(
+                        onChanged: (text) {
+                          this.numberOfMinesText = text;
+                        },
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: 'Bombs count',
+                          helperText: "Number of bombs",
+                          labelText: "Bombs",
+                        ),
+                      )))
             ],
           ),
         ),
@@ -121,14 +178,9 @@ class _MineSweeperGameState extends State<MineSweeperGame> {
   Widget _buildGridItems(BuildContext context, int index) {
 //    int gridStateLength = 4;
     int x, y = 0;
-    x = (index / numberOfColumn).floor();
-    y = index % numberOfColumn;
+    x = (index / numberOfColumns).floor();
+    y = index % numberOfColumns;
 
-//    print("row $row");
-//    print("column $column");
-//    print("index $index");
-//    print("x $x");
-    print("index [$index, $x, $y]");
     return GestureDetector(
       onTap: () => _handleCellTapped(x, y),
       child: GridTile(
@@ -149,16 +201,6 @@ class _MineSweeperGameState extends State<MineSweeperGame> {
 
   _handleCellTapped(x, y) {
     gameBoard.revealCell(x, y);
-    setState(() {});
-  }
-
-  _handleRevealAll() {
-    gameBoard.revealAll();
-    setState(() {});
-  }
-
-  _handleHideAll() {
-    gameBoard.hideAll();
     setState(() {});
   }
 }
