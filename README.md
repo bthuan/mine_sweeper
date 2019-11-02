@@ -9,4 +9,4 @@ A Mine Sweeper game written in Flutter.
 - The images are downloaded from:
   [https://github.com/pardahlman/minesweeper](https://github.com/pardahlman/minesweeper)
 - Deployed web version of the app on Heroku:
-  [https://young-brook-75307.herokuapp.com/#/]([https://github.com/pardahlman/minesweeper](https://github.com/pardahlman/minesweeper))
+  [https://young-brook-75307.herokuapp.com](https://young-brook-75307.herokuapp.com)
