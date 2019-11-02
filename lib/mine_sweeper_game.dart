@@ -51,7 +51,9 @@ class _MineSweeperGameState extends State<MineSweeperGame> {
                   height: 70.0,
                   child: FlatButton(
                       onPressed: () => initialize(),
-                      child: Image.asset('assets/images/happyFace.png')))
+                      child: gameBoard.gameOver
+                          ? Image.asset('assets/images/sadFace.png')
+                          : Image.asset('assets/images/happyFace.png')))
             ],
           ),
         ),

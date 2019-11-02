@@ -7,6 +7,7 @@ class GameBoard {
   int numberOfColumn;
   int numberOfBombs;
   List<List<Cell>> cells;
+  bool gameOver = false;
 
   GameBoard(this.numberOfRow, this.numberOfColumn, this.numberOfBombs) {
     cells = new List();
@@ -28,6 +29,15 @@ class GameBoard {
   void revealCell(x, y) {
     // Do nothing if this cell is revealed
     if (!cells[x][y].hidden) {
+      return;
+    }
+
+    // Game over!
+    if (cells[x][y].type == CellType.bomb) {
+      cells[x][y].hidden = false;
+      cells[x][y].trapped = true;
+      revealAll();
+      this.gameOver = true;
       return;
     }
 

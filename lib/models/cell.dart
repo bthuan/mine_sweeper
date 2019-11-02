@@ -2,6 +2,7 @@ class Cell {
   CellType type;
   int numberOfBombsSurrounded;
   bool hidden = true;
+  bool trapped = false;
 
   bool hasBomb() {
     return type == CellType.bomb;

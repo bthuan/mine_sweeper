@@ -8,11 +8,11 @@ class CellWidget extends StatelessWidget {
 
   CellWidget({this.cell});
 
-  Image getImage(Cell cell){
-    if(cell.hidden){
+  Image getImage(Cell cell) {
+    if (cell.hidden) {
       return Image.asset('assets/images/facingDown.png');
     } else {
-      switch(cell.type){
+      switch (cell.type) {
         case CellType.bomb:
           return Image.asset('assets/images/bomb.png');
         case CellType.zero:
@@ -38,12 +38,11 @@ class CellWidget extends StatelessWidget {
           return Image.asset('assets/images/facingDown.png');
       }
     }
-
   }
 
   Widget build(context) {
     return Container(
-      color: Colors.yellow,
+      color: cell.trapped ? Colors.red : Colors.yellow,
       child: getImage(this.cell),
     );
   }
