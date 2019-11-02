@@ -8,6 +8,7 @@ class GameBoard {
   int numberOfBombs;
   List<List<Cell>> cells;
   bool gameOver = false;
+  bool won = false;
   int numberOfRemainingCells;
   int numberOfRevealedCells = 0;
 
@@ -44,9 +45,17 @@ class GameBoard {
       return;
     }
 
+    // Update cell's status
     cells[x][y].hidden = false;
     numberOfRemainingCells--;
     numberOfRevealedCells++;
+
+    // If all none-bomb cells are revealed: win!
+    if(numberOfRemainingCells == numberOfBombs){
+      this.won = true;
+      revealAll();
+      return;
+    }
 
     // if this cell is empty -> reveal adjacent cells
     if (cells[x][y].type == CellType.zero) {

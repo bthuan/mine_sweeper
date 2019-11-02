@@ -40,7 +40,9 @@ class _MineSweeperGameState extends State<MineSweeperGame> {
 
   initialize() {
     // reset the configuration if there are values set
-    if(numberOfRowsText.isNotEmpty && numberOfColumnsText.isNotEmpty && numberOfMinesText.isNotEmpty){
+    if (numberOfRowsText.isNotEmpty &&
+        numberOfColumnsText.isNotEmpty &&
+        numberOfMinesText.isNotEmpty) {
       numberOfRows = int.parse(numberOfRowsText);
       numberOfColumns = int.parse(numberOfColumnsText);
       numberOfMines = int.parse(numberOfMinesText);
@@ -82,9 +84,7 @@ class _MineSweeperGameState extends State<MineSweeperGame> {
                       height: 70.0,
                       child: FlatButton(
                           onPressed: () => initialize(),
-                          child: gameBoard.gameOver
-                              ? Image.asset('assets/images/sadFace.png')
-                              : Image.asset('assets/images/happyFace.png'))),
+                          child: _getActionButtonImage()))
                 ],
               ),
               Column(
@@ -173,6 +173,15 @@ class _MineSweeperGameState extends State<MineSweeperGame> {
         ),
       ]),
     );
+  }
+
+  Image _getActionButtonImage() {
+    if (gameBoard.gameOver)
+      return Image.asset('assets/images/sadFace.png');
+    else if (gameBoard.won) {
+      return Image.asset('assets/images/won.png');
+    }
+    return Image.asset('assets/images/happyFace.png');
   }
 
   Widget _buildGridItems(BuildContext context, int index) {
