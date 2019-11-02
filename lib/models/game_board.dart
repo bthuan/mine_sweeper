@@ -8,6 +8,8 @@ class GameBoard {
   int numberOfBombs;
   List<List<Cell>> cells;
   bool gameOver = false;
+  int numberOfRemainingCells;
+  int numberOfRevealedCells = 0;
 
   GameBoard(this.numberOfRow, this.numberOfColumn, this.numberOfBombs) {
     cells = new List();
@@ -19,6 +21,7 @@ class GameBoard {
       }
       cells.add(columns);
     }
+    numberOfRemainingCells = numberOfRow * numberOfColumn;
   }
 
   void initializeGame() {
@@ -42,6 +45,8 @@ class GameBoard {
     }
 
     cells[x][y].hidden = false;
+    numberOfRemainingCells--;
+    numberOfRevealedCells++;
 
     // if this cell is empty -> reveal adjacent cells
     if (cells[x][y].type == CellType.zero) {

@@ -41,6 +41,10 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+  fonts:
+    - family: CursedTimer
+      fonts:
+        - asset: assets/fonts/CursedTimerUlil-Aznm.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

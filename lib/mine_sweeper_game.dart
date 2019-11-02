@@ -44,16 +44,42 @@ class _MineSweeperGameState extends State<MineSweeperGame> {
           color: Colors.indigo[100],
           height: 70.0,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              SizedBox(
-                  width: 70.0,
-                  height: 70.0,
-                  child: FlatButton(
-                      onPressed: () => initialize(),
-                      child: gameBoard.gameOver
-                          ? Image.asset('assets/images/sadFace.png')
-                          : Image.asset('assets/images/happyFace.png')))
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                        '${gameBoard.numberOfRemainingCells.toString().padLeft(2, '0')}',
+                        style: TextStyle(
+                            fontFamily: "CursedTimer",
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 40))
+                  ]),
+              Column(
+                children: <Widget>[
+                  SizedBox(
+                      width: 70.0,
+                      height: 70.0,
+                      child: FlatButton(
+                          onPressed: () => initialize(),
+                          child: gameBoard.gameOver
+                              ? Image.asset('assets/images/sadFace.png')
+                              : Image.asset('assets/images/happyFace.png'))),
+                ],
+              ),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                        '${gameBoard.numberOfRevealedCells.toString().padLeft(2, '0')}',
+                        style: TextStyle(
+                            fontFamily: "CursedTimer",
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 40))
+                  ]),
             ],
           ),
         ),
